@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cinélog - Tableau de Bord Commentaire{% endblock %}
+
+{% block body %}
+<div class="">
+   
+    <div class="">
+        <table>
+            <tr>
+                <th>Utilisateur</th>
+                <th>Commentaire</th>
+                <th>Notation</th>
+                <th>Film</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                {% for comment in comments %}
+                    <td>{{comment.user.username}}</td>
+                    <td>{{comment.content}}</td>
+                    <td>{{comment.rating}}</td>
+                    <td>{{comment.movie.title}}</td>
+                    <td><a href="{{path('delete_comment', {'id': comment.id})}}">Supprimer</a></td>
+                {% endfor %}
+            </tr>
+            
+        </table>
+    </div>
+</div>
+{% endblock %}
