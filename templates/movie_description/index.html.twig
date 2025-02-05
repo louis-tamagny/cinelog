@@ -1,0 +1,28 @@
+{% block body %}
+    <h1>{{ movie.title }} ({{ movie.release_date|date("Y") }})</h1>
+    
+    <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}" alt="{{ movie.title }}">
+    
+    <h2>Description</h2>
+    <p>{{ movie.overview ?: 'Aucune description disponible.' }}</p>
+
+    <h2>Note Moyenne</h2>
+    <p>{{ movie.vote_average }} / 10 ({{ movie.vote_count }} votes)</p>
+
+    <h2>Genres</h2>
+    <ul>
+        {% for genre in movie.genres %}
+            <li>{{ genre.name }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Durée</h2>
+    <p>{{ movie.runtime }} minutes</p>
+
+    <h2>Site Officiel</h2>
+    {% if movie.homepage %}
+        <p><a href="{{ movie.homepage }}" target="_blank">Visiter</a></p>
+    {% else %}
+        <p>Non disponible.</p>
+    {% endif %}
+{% endblock %}
