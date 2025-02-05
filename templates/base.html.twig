@@ -12,7 +12,8 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body class="bg-gray-900">
+    <body class="">
+        {{ include('navbar.html.twig') }}
         {% block body %}{% endblock %}
     </body>
 </html>
