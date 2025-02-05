@@ -41,7 +41,7 @@ class TmdbService
 
         $data = $response->toArray();
 
-        return $data['overview'] ?? null;
+        return $data ?? null;
     }
 
 }
