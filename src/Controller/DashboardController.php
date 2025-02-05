@@ -19,8 +19,8 @@ final class DashboardController extends AbstractController
             'users' => $users,
         ]);
     }
-    #[Route('/dashboard/comment', name: 'show_comment')]
-    public function show_comment(CommentRepository $commentsRepository): Response
+    #[Route('/dashboard/comment', name: 'dashboard_comments')]
+    public function dashboard_comments(CommentRepository $commentsRepository): Response
     {
         $comments = $commentsRepository->findAll();
         return $this->render('dashboard/show_comment.html.twig', [
