@@ -2,15 +2,47 @@
 
 namespace App\Controller;
 
+use App\Repository\MovieRepository;
+use App\Service\TmdbService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
-final class HomeController extends AbstractController
+class HomeController extends AbstractController
 {
-    #[Route('/', name: 'home')]
-    public function index(): Response
+    private $tmdbService;
+    private $movieRepository;
+
+    public function __construct(TmdbService $tmdbService, MovieRepository $movieRepository)
     {
-        return $this->render('home/index.html.twig', []);
+        $this->tmdbService = $tmdbService;
+        $this->movieRepository = $movieRepository;
+    }
+
+    #[Route('/', name: 'home')]
+    public function search(Request $request): Response
+    {
+        $query = $request->query->get('query');
+        $movies = [];
+
+        if ($query) {
+            $movies = $this->tmdbService->searchMovies($query, 6);
+        }
+
+        $topCommentedMovies = $this->movieRepository->findMoviesWithMostComments();
+        $topCommentedMoviesDetails = [];
+
+        foreach ($topCommentedMovies as $movie) {
+            $movieDetails = $this->tmdbService->getMovieDetails($movie['tmdbId']);
+            $movieDetails['comment_count'] = $movie['comment_count'];
+            $topCommentedMoviesDetails[] = $movieDetails;        
+        }
+
+        return $this->render('home/index.html.twig', [
+            'query' => $query,
+            'movies' => $movies,
+            'topCommentedMoviesDetails' => $topCommentedMoviesDetails,
+        ]);
     }
 }
