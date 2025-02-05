@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+
+<div class="">
+   <h1 class="mb-8 text-5xl font-extrabold dark:text-white">Listes des Utilisateurs</h1>
+
+   <div class="grid gap-8 lg:gap-16 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-2 my-2">
+        {% for user in users %}
+           {% if user.roles[0] == "ROLE_USER" %}
+                <div class="flex flex-col items-center justify-center p-4">
+                    <a href="{{path('user_detail',{"username": user.username})}}">
+                        <div class="text-center text-gray-500 dark:text-gray-400 duration-200 hover:scale-110">
+                            <img class="mx-auto mb-4 w-36 h-36 rounded-full shadow-md " src="https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg" alt="Bonnie Avatar">
+                            <h3 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                {{ user.username }}
+                            </h3>
+                        </div>
+                    </a>
+                </div>
+                
+            {% endif %}
+        {% endfor %}
+
+    </div>  
+</div>
+{% endblock %}
