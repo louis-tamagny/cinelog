@@ -19,9 +19,6 @@ class CommentType extends AbstractType
         $builder
             ->add('note')
             ->add('message')
-            ->add('date', null, [
-                'widget' => 'single_text',
-            ])
             ->add('submit', SubmitType::class, [
               'label'=> 'Commenter'
             ])

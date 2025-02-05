@@ -35,20 +35,25 @@ final class CommentController extends AbstractController
       return $this->redirectToRoute('');
     }
 
-    #[Route('/movie/{id}/new_comment', name:'movie_new_comment', methods: ['GET', 'POST'])]
-    public function new(Request $request, Movie $movie, EntityManagerInterface $entityManager): Response
+    #[Route('/movie/details/{tmdbId}', name:'movie_new_comment', methods: ['POST'])]
+    public function new(Request $request, int $tmdbId, EntityManagerInterface $entityManager): Response
     {
         // Créer une nouvelle instance de l'entité User
         $comment = new Comment();
 
-
+        // la définition du User est à changer une fois le JWT fait
+        // $user = $this->getUser();
         $user = $entityManager->getRepository(User::class)->find(1);
+        $movie = $entityManager->getRepository(Movie::class)->findOneBy(['tmdbId' => $tmdbId]);
+        $date = new \DateTime();
 
         // Créer le formulaire et le lier à l'entité
         $form = $this->createForm(CommentType::class, $comment);
 
+        // Attacher les attributs automatiques
         $comment->setCommentUser($user);
         $comment->setMovie($movie);
+        $comment->setDate($date);
         // Traiter la requête HTTP
         $form->handleRequest($request);
 
@@ -59,12 +64,10 @@ final class CommentController extends AbstractController
             $entityManager->flush();
 
             // Rediriger vers une autre page ou afficher un message de succès
-            return $this->redirectToRoute('app_comment');
+            return $this->redirectToRoute('movie_details', ['id' => $movie->getTmdbId()]);
         }
 
         // Rendre le formulaire pour qu'il soit affiché à l'utilisateur
-        return $this->render('comment/new.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('movie_details', ['id' => $movie->getTmdbId()], status: Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }
