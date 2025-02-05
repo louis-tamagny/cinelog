@@ -33,15 +33,13 @@ class TmdbService
     }
 
     // Récupérer les information d'un film par son ID
-    public function getMovieDescription(int $movieId): ?string
+    public function getMovieDetails(int $movieId): array
     {
         $response = $this->client->request('GET', "{$this->baseUrl}/movie/{$movieId}", [
             'query' => ['api_key' => $this->apiKey]
         ]);
-
-        $data = $response->toArray();
-
-        return $data ?? null;
+    
+        return $response->toArray();
     }
 
 }
