@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 use App\Repository\CommentRepository;
+use App\Entity\Comment;
+use Doctrine\ORM\EntityManagerInterface;
 
 final class CommentController extends AbstractController
 {
@@ -18,14 +20,14 @@ final class CommentController extends AbstractController
         ]);
     }
 
-    #[Route('/comment/:id', name:'delete_comment', methods: ['DELETE'])]
-    public function delete(CommentRepository $commentRepository, int $id): Response
+    #[Route('/comment/{id}', name:'delete_comment', methods: ['DELETE'])]
+    public function delete(EntityManagerInterface $entityManager, Comment $comment): Response
     {
-      $comment = $commentRepository->find($id);
       if ($comment) {
-        $comment->delete();
+        $entityManager->remove($comment);
+        $entityManager->flush();
         $this->addFlash('success','Le commentaire a été effacé');
-        return $this->redirectToRoute('');
+        return new Response('', Response::HTTP_NO_CONTENT);
       }
       return $this->redirectToRoute('');
     }

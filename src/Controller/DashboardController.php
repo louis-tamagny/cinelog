@@ -12,18 +12,12 @@ use App\Repository\MovieRepository;
 final class DashboardController extends AbstractController
 {
     #[Route('/dashboard', name: 'app_dashboard')]
-    public function index(UserRepository $usersRepository): Response
+    public function index(UserRepository $usersRepository, CommentRepository $commentRepository): Response
     {
+        $comments = $commentRepository->findAll();
         $users = $usersRepository->findAll();
         return $this->render('dashboard/index.html.twig', [
             'users' => $users,
-        ]);
-    }
-    #[Route('/dashboard/comment', name: 'dashboard_comments')]
-    public function dashboard_comments(CommentRepository $commentsRepository): Response
-    {
-        $comments = $commentsRepository->findAll();
-        return $this->render('dashboard/show_comment.html.twig', [
             'comments' => $comments,
         ]);
     }
