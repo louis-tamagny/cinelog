@@ -38,7 +38,6 @@ class TmdbService
         $response = $this->client->request('GET', "{$this->baseUrl}/movie/{$movieId}", [
             'query' => ['api_key' => $this->apiKey]
         ]);
-    
         return $response->toArray();
     }
 
