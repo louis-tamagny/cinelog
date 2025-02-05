@@ -6,6 +6,11 @@
 parameters:
 
 services:
+    App\Service\TmdbService:
+        arguments:
+            $client: '@http_client'
+            $apiKey: '%env(TMDB_API_KEY)%'
+            $baseUrl: '%env(TMDB_BASE_URL)%'
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
