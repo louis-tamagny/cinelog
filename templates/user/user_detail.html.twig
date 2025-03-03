@@ -1,18 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Cinélog - {{ user_detail.username }}{% endblock %}
 
 {% block body %}
     <div class="flex flex-col gap-4 items-center justify-center p-6 ">
         {% for comment in comments %}
         {% set movie = movies[comment.getMovie().getTmdbId()] %}
         {% set nbResponses = movies[comment.getMovie().getTmdbId()]['nbResponses'] %}
-        
+
         <div class="flex flex-col items-center w-full bg-white border border-gray-200 rounded-lg shadow-sm md:flex-row  dark:border-gray-700 dark:bg-gray-800">
             <!-- Image du film -->
             <img class="object-cover rounded-tl-lg rounded-bl-lg" src="https://image.tmdb.org/t/p/w154{{ movie.poster_path }}" alt="{{ movie.title }}">
 
-            
+
             <!-- Détails du commentaire -->
             <div class="flex flex-col justify-between p-4 ">
                 <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ movie.title }}</h2>
@@ -31,7 +31,7 @@
                             {% endif %}
                         {% endfor %}
                 </p>
-                
+
                 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
                     "{{ comment.message|length > 250 ? comment.message|slice(0, 250) ~ '...' : comment.message }}"
                 </p>
@@ -42,4 +42,3 @@
         {% endfor %}
     </div>
 {% endblock %}
-

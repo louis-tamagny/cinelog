@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Réponses{% endblock %}
+{% block title %}Cinélog - Réponses{% endblock %}
 
 {% block body %}
 <div class="flex flex-col gap-4 items-center justify-center p-6 ">
@@ -9,7 +9,7 @@
         <!-- Image du film -->
         <img class="object-cover rounded-tl-lg rounded-bl-lg" src="https://image.tmdb.org/t/p/w154{{ movie.poster_path }}" alt="{{ movie.title }}">
 
-        
+
         <!-- Détails du commentaire -->
         <div class="flex flex-col justify-between p-4 ">
             <p class="text-xs text-gray-400 font-thin">{{comment.getCommentUser().getUsername()}} à donné son avis sur le film :</p>
@@ -29,7 +29,7 @@
                         {% endif %}
                     {% endfor %}
             </p>
-            
+
             <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
                 "{{ comment.message|length > 250 ? comment.message|slice(0, 250) ~ '...' : comment.message }}"
             </p>
@@ -46,10 +46,10 @@
                 </form>
             </div>
         {% endif %}
-        
+
         {% if responses|length > 0 %}
         <h2 class="font-bold text-white text-lg mt-4 mb-2">Dernières réponses</h2>
-        
+
         <div class="flex flex-col gap-2">
             {% for response in responses %}
                 <div class="w-full p-4 flex flex-col border border-gray-500 rounded">
