@@ -18,6 +18,8 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordC
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\SecurityRequestAttributes;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
+
 
 #[AllowDynamicProperties] class JwtAuthenticator extends AbstractLoginFormAuthenticator
 {
@@ -38,8 +40,13 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
         $user = $this->userRepository->findOneBy(['username' => $username]);
 
         if (!$user) {
-            throw new \Exception('Invalid credentials');
+            throw new CustomUserMessageAuthenticationException('Invalid credentials');
         }
+
+        if (password_verify($password, $user->getPassword()) and $user->isDisabled()) {
+          throw new CustomUserMessageAuthenticationException('Disabled account');
+        }
+
 
         // Vous pouvez ajouter ici la vérification du mot de passe si nécessaire
         // Exemple : $passwordValid = password_verify($password, $user->getPassword());
