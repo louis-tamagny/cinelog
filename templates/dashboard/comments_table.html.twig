@@ -36,7 +36,8 @@
                       {{ comment.movie.title }}
                   </td>
                   <td class="px-6 py-4">
-                    <form action="{{path('delete_comment', {'id': comment.comment.getId()})}}" method="DELETE">
+                    <form action="{{ path('delete_comment', {'id': comment.comment.getId()}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?');">
+                      <input type="hidden" name="_method" value="DELETE">
                       <button type="submit">Supprimer</button>
                     </form>
                   </td>
