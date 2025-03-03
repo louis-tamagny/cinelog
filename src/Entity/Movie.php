@@ -6,6 +6,7 @@ use App\Repository\MovieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Service\TmdbService;
 
 #[ORM\Entity(repositoryClass: MovieRepository::class)]
 class Movie
@@ -29,6 +30,8 @@ class Movie
      */
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'watchLater')]
     private Collection $users;
+
+    private TmdbService $tmdbService;
 
     public function __construct()
     {
