@@ -7,12 +7,9 @@
 <form method="post" id="comment-form" class="w-[50%] m-auto">
   {{ form_start(form) }}
 
-  
-  
   <div class="flex items-center space-x-4">
-    
     <!-- Conteneur des étoiles avec flexbox -->
-    <div class="flex space-x-1 " id="star-rating">
+    <div class="flex space-x-1 mb-2" id="star-rating">
         {% for i in 1..5 %}
             <input type="radio" id="star{{ i }}" name="comment[note]" value="{{ i }}" class="hidden"
                    {% if i == form.vars.value.note %} checked {% endif %} />
@@ -42,16 +39,15 @@
   {{ form_end(form) }}
 </form>
 
-
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const stars = document.querySelectorAll('#star-rating label');
             const noteText = document.getElementById('note-text');
-            
+
             stars.forEach(function(star) {
                 star.addEventListener('click', function () {
                     const selectedValue = parseInt(star.getAttribute('data-star'));
-                    
+
                     // Mise à jour de la couleur des étoiles
                     stars.forEach(function(s) {
                         const svg = s.querySelector('svg');

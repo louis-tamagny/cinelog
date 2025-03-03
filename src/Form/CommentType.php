@@ -28,12 +28,10 @@ class CommentType extends AbstractType
                 ],
                 'expanded' => true,
                 'multiple' => false,
-                'attr' => ['class' => 'hidden'], // Ajoute une classe pour le CSS personnalisé
+                'label' => false,
+                'attr' => ['class' => 'star-rating hidden'], // Ajoute une classe pour le CSS personnalisé
             ])
-            ->add('message')
-            ->add('submit', SubmitType::class, [
-              'label'=> ''
-            ])
+            ->add('message', options: ['attr' => ['class'=> 'hidden']])
         ;
     }
 
