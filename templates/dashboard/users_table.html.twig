@@ -42,6 +42,17 @@
                     <form action="{{path('update_user', {'id': comment.getId()})}}" method="DELETE">
                       <button type="submit">Modifier</button>
                     </form> #}
+                    {% if app.user.getId() != user.getId() %}
+                        <form action="{{ path('toggle_admin', {'id': user.getId()}) }}" method="POST">
+                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-semibold text-xs py-1 px-2 rounded">
+                                {% if 'ROLE_ADMIN' in user.getRoles() %}
+                                    Retirer Admin
+                                {% else %}
+                                    Passer Admin
+                                {% endif %}
+                            </button>
+                        </form>
+                    {% endif %}
                   </td>
               </tr>
             {% endfor %}
