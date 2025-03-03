@@ -35,10 +35,7 @@
                 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
                     "{{ comment.message|length > 250 ? comment.message|slice(0, 250) ~ '...' : comment.message }}"
                 </p>
-     
-                {% if nbResponses > 0 %}
-                    <a href="{{path('commentResponse', {'id': comment.id})}}" class="text-amber-500 hover:underline text-xs">Voir les commentaires sur l'avis. ({{nbResponses}})</a>
-                {% endif %}
+                <a href="{{path('commentResponse', {'id': comment.id})}}" class="text-amber-500 hover:underline text-xs">Voir les commentaires sur l'avis. ({{nbResponses}})</a>
             </div>
         </div>
 
