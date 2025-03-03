@@ -21,12 +21,14 @@ final class MovieDescriptionController extends AbstractController
     public function details(int $id, TmdbService $tmdbService): Response
     {
         $movie = $tmdbService->getMovieDetails($id);
+        $trailerKey = $tmdbService->getMovieTrailer($id);
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
 
         return $this->render('movie_description/index.html.twig', [
             'movie' => $movie,
             'form' => $form->createView(),
+            'trailerKey' => $trailerKey,
         ]);
     }
 
