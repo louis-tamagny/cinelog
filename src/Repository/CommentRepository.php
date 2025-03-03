@@ -23,6 +23,8 @@ class CommentRepository extends ServiceEntityRepository
     public function findCommentsByUser(User $user): array
     {
         return $this->createQueryBuilder('c')
+            ->select('c', 'm.tmdbId AS tmdbId')
+            ->leftJoin('c.movie', 'm')
             ->andWhere('c.commentUser = :user')
             ->setParameter('user', $user)
             ->orderBy('c.date', 'DESC')
