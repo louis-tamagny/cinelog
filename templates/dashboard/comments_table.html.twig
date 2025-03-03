@@ -24,19 +24,19 @@
             {% for comment in comments %}
               <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
                   <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      {{comment.getCommentUser().getUsername()}}
+                      {{comment.comment.getCommentUser().getUsername()}}
                   </th>
                   <td class="px-6 py-4">
-                      {{comment.getMessage()}}
+                      {{comment.comment.getMessage()}}
                   </td>
                   <td class="px-6 py-4">
-                      {{comment.getNote()}}
+                      {{comment.comment.getNote()}}
                   </td>
                   <td class="px-6 py-4">
-                      
+                      {{ comment.movie.title }}
                   </td>
                   <td class="px-6 py-4">
-                    <form action="{{path('delete_comment', {'id': comment.getId()})}}" method="DELETE">
+                    <form action="{{path('delete_comment', {'id': comment.comment.getId()})}}" method="DELETE">
                       <button type="submit">Supprimer</button>
                     </form>
                   </td>
