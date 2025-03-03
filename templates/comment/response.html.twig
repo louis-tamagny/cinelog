@@ -38,15 +38,16 @@
 
     <div class="w-full">
         {% if app.user and app.user != comment.getCommentUser() %}
-        <h2 class="font-bold text-white text-lg mb-2">Ajouter une réponse</h2>
-        <div class="w-full flex flex-col">
-            <form action="{{ path('add_response', {'id': comment.id}) }}" method="post">
-                <textarea required name="response_message" rows="4" class="w-full block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-amber-500 focus:border-amber-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500" placeholder="Votre réponse..."></textarea>
-                <button type="submit" class="mt-2 px-4 py-2 bg-amber-500 text-white rounded">Répondre</button>
-            </form>
-        </div>
+            <h2 class="font-bold text-white text-lg mb-2">Ajouter une réponse</h2>
+            <div class="w-full flex flex-col">
+                <form action="{{ path('add_response', {'id': comment.id}) }}" method="post">
+                    <textarea required name="response_message" rows="4" class="w-full block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-amber-500 focus:border-amber-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500" placeholder="Votre réponse..."></textarea>
+                    <button type="submit" class="mt-2 px-4 py-2 bg-amber-500 text-white rounded">Répondre</button>
+                </form>
+            </div>
         {% endif %}
         
+        {% if responses|length > 0 %}
         <h2 class="font-bold text-white text-lg mt-4 mb-2">Dernières réponses</h2>
         
         <div class="flex flex-col gap-2">
@@ -60,6 +61,7 @@
                 </div>
             {% endfor %}
         </div>
+        {% endif %}
     </div>
 </div>
 {%endblock%}
