@@ -11,13 +11,25 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class CommentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('note')
+            ->add('note', ChoiceType::class, [
+                'choices' => [
+                    '1 étoile' => 1,
+                    '2 étoiles' => 2,
+                    '3 étoiles' => 3,
+                    '4 étoiles' => 4,
+                    '5 étoiles' => 5,
+                ],
+                'expanded' => true,
+                'multiple' => false,
+                'attr' => ['class' => 'star-rating'], // Ajoute une classe pour le CSS personnalisé
+            ])
             ->add('message')
             ->add('submit', SubmitType::class, [
               'label'=> 'Commenter'

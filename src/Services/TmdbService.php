@@ -36,9 +36,34 @@ class TmdbService
     public function getMovieDetails(int $movieId): array
     {
         $response = $this->client->request('GET', "{$this->baseUrl}/movie/{$movieId}", [
-            'query' => ['api_key' => $this->apiKey]
+            'query' => ['api_key' => $this->apiKey, 'language' => 'fr-FR']
         ]);
         return $response->toArray();
     }
 
+
+
+    public function getMovieTrailer(int $movieId): ?string
+    {
+        // Send request to TMDB API to get movie videos (trailer)
+        $response = $this->client->request('GET', "{$this->baseUrl}/movie/{$movieId}/videos", [
+            'query' => [
+                'api_key' => $this->apiKey,
+                'language' => 'en-US',
+            ]
+        ]);
+    
+        // Check the response and return the trailer key
+        $data = $response->toArray();
+    
+        // Loop through the results to find a video with type 'Trailer'
+        foreach ($data['results'] as $video) {
+            if ($video['type'] === 'Trailer') {
+                return $video['key'];  // Return the YouTube key for the trailer
+            }
+        }
+    
+        return null;  // No trailer found
+    }
+    
 }
