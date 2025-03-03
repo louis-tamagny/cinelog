@@ -18,12 +18,17 @@
         <p class="text-white ml-4 my-2">{{ movie.overview ?: 'Aucune description disponible.' }}</p> 
     </div>
 </div>
-<iframe width="420" height="315"
-src="https://www.youtube.com/embed/{{trailerKey}}">
-</iframe> 
+{%if trailerKey!= NULL %}
+<div >  
+    <h2 class=" relative text-white text-xl font-bold ml-4 mt-2 mb-8 before:absolute before:content before:w-1 before:h-full before:border-2 before:border-yellow-500 before:left-[-15px] before:bottom-[-2px] before:bg-yellow-500 before:rounded-full">Bande-Annonce</h2>
+    <iframe width="100%" height="800" src="https://www.youtube.com/embed/{{trailerKey}}"></iframe> 
+</div>
+{%endif%}
 
-{%if comments|length > 0 %}
-    <h2 class="text-white text-2xl font-bold">Commentaires</h2>
+{{ include('comment/new.html.twig')}}
+
+{%if comments %}
+<h2 class=" relative text-white text-xl font-bold ml-4 mt-12 mb-4 before:absolute before:content before:w-1 before:h-full before:border-2 before:border-yellow-500 before:left-[-15px] before:bottom-[-2px] before:bg-yellow-500 before:rounded-full">Commentaire(s)</h2>
     
     <div class="flex flex-col gap-4 items-center justify-center p-6 ">
         {% for comment in comments %}
@@ -32,7 +37,7 @@ src="https://www.youtube.com/embed/{{trailerKey}}">
             
             <!-- Détails du commentaire -->
             <div class="flex flex-col justify-between p-4 ">
-                <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ movie.title }}</h2>
+                <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ comment.commentUser.username }}</h2>
                 <p class="text-gray-600 text-sm mt-1 items-center flex">
                         {% for i in 1..5 %}
                             {% if i <= comment.note %}
@@ -59,5 +64,4 @@ src="https://www.youtube.com/embed/{{trailerKey}}">
     </div>
 {%endif%}
             
-    {{ include('comment/new.html.twig')}}
 {% endblock %}
