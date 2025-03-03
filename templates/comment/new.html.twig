@@ -39,9 +39,10 @@
         {{ form.vars.submit_label|default('Envoyer') }}
     </button>
   </div>
+  {{ form_end(form) }}
 </form>
 
-{{ form_end(form) }}
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const stars = document.querySelectorAll('#star-rating label');
