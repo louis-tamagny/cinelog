@@ -36,13 +36,23 @@ class HomeController extends AbstractController
         foreach ($topCommentedMovies as $movie) {
             $movieDetails = $this->tmdbService->getMovieDetails($movie['tmdbId']);
             $movieDetails['comment_count'] = $movie['comment_count'];
-            $topCommentedMoviesDetails[] = $movieDetails;        
+            $topCommentedMoviesDetails[] = $movieDetails;
+        }
+
+        $topRatedMovies = $this->movieRepository->findTopRatedMovies();
+        $topRatedMoviesDetails = [];
+
+        foreach ($topRatedMovies as $movie) {
+            $movieDetails = $this->tmdbService->getMovieDetails($movie['tmdbId']);
+            $movieDetails['avg_rating'] = $movie['avg_rating'];
+            $topRatedMoviesDetails[] = $movieDetails;
         }
 
         return $this->render('home/index.html.twig', [
             'query' => $query,
             'movies' => $movies,
             'topCommentedMoviesDetails' => $topCommentedMoviesDetails,
+            'topRatedMoviesDetails' => $topRatedMoviesDetails,
         ]);
     }
 }

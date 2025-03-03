@@ -29,10 +29,10 @@ final class CommentController extends AbstractController
       if ($comment) {
         $entityManager->remove($comment);
         $entityManager->flush();
-        $this->addFlash('success','Le commentaire a été effacé');
-        return new Response('', Response::HTTP_NO_CONTENT);
+        $this->addFlash( 'success','Le commentaire a été effacé');
+        return $this->redirectToRoute('app_dashboard', status: Response::HTTP_SEE_OTHER);
       }
-      return $this->redirectToRoute('');
+      return $this->redirectToRoute('app_dashboard');
     }
 
     #[Route('/movie/details/{tmdbId}', name:'movie_new_comment', methods: ['POST'])]
@@ -42,9 +42,14 @@ final class CommentController extends AbstractController
         $comment = new Comment();
 
         // la définition du User est à changer une fois le JWT fait
-        // $user = $this->getUser();
-        $user = $entityManager->getRepository(User::class)->find(1);
+        $user = $this->getUser();
         $movie = $entityManager->getRepository(Movie::class)->findOneBy(['tmdbId' => $tmdbId]);
+        if (!$movie) {
+          $movie = new Movie();
+          $movie->setTmdbId($tmdbId);
+          $entityManager->persist($movie);
+        }
+
         $date = new \DateTime();
 
         // Créer le formulaire et le lier à l'entité

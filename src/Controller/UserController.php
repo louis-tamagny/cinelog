@@ -10,6 +10,8 @@ use App\Repository\CommentRepository;
 use App\Repository\MovieRepository;
 use App\Entity\User;
 use App\Service\TmdbService;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 final class UserController extends AbstractController
 {
@@ -37,5 +39,29 @@ final class UserController extends AbstractController
             'comments' => $comments,
             'movies' => $movies,
         ]);
+    }
+
+    #[Route('/user/toggle-admin/{id}', name: 'toggle_admin')]
+    public function toggleAdmin(User $user, EntityManagerInterface $entityManager): RedirectResponse
+    {
+        $currentUser = $this->getUser();
+
+        if ($currentUser->getId() === $user->getId()) {
+            $this->addFlash('error', 'Vous ne pouvez pas modifier votre propre rôle.');
+            return $this->redirectToRoute('user_list');
+        }
+
+        if ($user->isAdmin()) {
+            $user->setRoles(array_diff($user->getRoles(), ['ROLE_ADMIN']));
+        } else {
+            $roles = $user->getRoles();
+            $roles[] = 'ROLE_ADMIN';
+            $user->setRoles($roles);
+        }
+
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_dashboard');
     }
 }
