@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Commentaires{% endblock %}
+
+{% block body %}
+<div class="max-w-2xl mx-auto p-4 text-white mt-4">
+    <h1 class="text-2xl font-semibold mb-4">Mes Commentaires</h1>
+
+    {% if comments is empty %}
+        <p>Vous n'avez pas encore de commentaires.</p>
+    {% else %}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {% for comment in comments %}
+                <div class="bg-gray-800 p-4 rounded-lg shadow-md flex flex-col justify-between">
+                    <div class="mb-4">
+                        <strong class="text-md">{{ comment.movie.title }}</strong>
+                        <div class="text-xs">({{ comment.date|date('Y-m-d H:i') }})</div>
+                    </div>
+                    <p>{{ comment.content }}</p>
+                    <a href="{{ path('movie_details', {'id': comment.movie.tmdbId}) }}" class="text-yellow-500 hover:underline mt-auto">Voir détails du film</a>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
