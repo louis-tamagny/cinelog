@@ -45,8 +45,11 @@ final class CommentController extends AbstractController
         // Créer une nouvelle instance de l'entité User
         $comment = new Comment();
 
-        // la définition du User est à changer une fois le JWT fait
         $user = $this->getUser();
+        if (!$user) {
+          return $this->redirectToRoute('login');
+        }
+
         $movie = $entityManager->getRepository(Movie::class)->findOneBy(['tmdbId' => $tmdbId]);
         if (!$movie) {
           $movie = new Movie();

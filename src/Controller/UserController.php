@@ -63,4 +63,22 @@ final class UserController extends AbstractController
 
         return $this->redirectToRoute('app_dashboard');
     }
+
+    #[Route('/user/{id}/toggle-disabled', name: 'toggle_disabled', methods: ["POST"])]
+    public function toggleDisabled(User $user, EntityManagerInterface $entityManager): RedirectResponse
+    {
+        $currentUser = $this->getUser();
+
+        if ($currentUser->getId() === $user->getId()) {
+            $this->addFlash('error', 'Vous ne pouvez pas vous bannir.');
+            return $this->redirectToRoute('app_dashboard');
+        }
+
+        $user->setIsDisabled(!$user->isDisabled());
+
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_dashboard');
+    }
 }
