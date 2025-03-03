@@ -53,11 +53,9 @@ final class UserController extends AbstractController
         }
 
         if ($user->isAdmin()) {
-            $user->setRoles(array_diff($user->getRoles(), ['ROLE_ADMIN']));
+            $user->setRoles(['ROLE_USER']);
         } else {
-            $roles = $user->getRoles();
-            $roles[] = 'ROLE_ADMIN';
-            $user->setRoles($roles);
+            $user->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
         }
 
         $entityManager->persist($user);
