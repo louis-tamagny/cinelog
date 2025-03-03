@@ -29,10 +29,10 @@ final class CommentController extends AbstractController
       if ($comment) {
         $entityManager->remove($comment);
         $entityManager->flush();
-        $this->addFlash('success','Le commentaire a été effacé');
-        return new Response('', Response::HTTP_NO_CONTENT);
+        $this->addFlash( 'success','Le commentaire a été effacé');
+        return $this->redirectToRoute('app_dashboard', status: Response::HTTP_SEE_OTHER);
       }
-      return $this->redirectToRoute('');
+      return $this->redirectToRoute('app_dashboard');
     }
 
     #[Route('/movie/details/{tmdbId}', name:'movie_new_comment', methods: ['POST'])]
