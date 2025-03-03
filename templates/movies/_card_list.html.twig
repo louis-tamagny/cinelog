@@ -1,0 +1,15 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+  {% for movie in movies %}
+      <div class="flex-1 max-w-64 bg-gray-800 p-4 rounded-lg shadow-md flex flex-col justify-between">
+          <div>
+              <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="{{ movie.title }}" class="my-2 rounded-lg w-full h-auto">
+          </div>
+          <div class="flex flex-col justify-between flex-grow">
+              <div class="mb-4">
+                  <strong class="text-md">{{ movie.title }}</strong>
+              </div>
+              <a href="{{ path('movie_details', {'id': movie.id}) }}" class="text-yellow-500 hover:underline mt-auto">Voir détails</a>
+          </div>
+      </div>
+  {% endfor %}
+</div>

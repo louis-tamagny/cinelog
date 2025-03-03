@@ -31,11 +31,17 @@ final class MovieDescriptionController extends AbstractController
 
         $form = $this->createForm(CommentType::class, $createcomment);
 
+        $user = $this->getUser();
+        $userFavorite = $user ? $user->getFavourite()->contains($moviecomment) : False;
+        $userWatchLater = $user ? $user->getWatchLater()->contains($moviecomment) : False;
+
         return $this->render('movie_description/index.html.twig', [
             'movie' => $movie,
             'form' => $form->createView(),
             'trailerKey' => $trailerKey,
             'comments' => $comments,
+            'userFavorite' => $userFavorite,
+            'userWatchLater' => $userWatchLater,
         ]);
     }
 
