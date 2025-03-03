@@ -15,23 +15,11 @@ class RegisterFormType extends AbstractType
     {
         $builder
             ->add('username')
-            ->add('roles')
             ->add('password')
             ->add('birthDate', null, [
                 'widget' => 'single_text',
             ])
             ->add('email')
-            ->add('isDisabled')
-            ->add('watchLater', EntityType::class, [
-                'class' => Movie::class,
-                'choice_label' => 'id',
-                'multiple' => true,
-            ])
-            ->add('favourite', EntityType::class, [
-                'class' => Movie::class,
-                'choice_label' => 'id',
-                'multiple' => true,
-            ])
         ;
     }
 
