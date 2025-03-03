@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Repository\UserRepository;
 use App\Repository\CommentRepository;
-use App\Repository\MovieRepository;
+use App\Repository\ResponseRepository;
 use App\Entity\User;
 use App\Service\TmdbService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,7 +25,7 @@ final class UserController extends AbstractController
     }
 
     #[Route('/user/{username}', name: 'user_detail')]
-    public function user_detail(UserRepository $userRepository, string $username, CommentRepository $commentRepository, TmdbService $tmdb): Response
+    public function user_detail(UserRepository $userRepository, ResponseRepository $responseRepository, string $username, CommentRepository $commentRepository, TmdbService $tmdb): Response
     {
         $user = $userRepository->findOneBy(['username' => $username]);
         $comments = $commentRepository->findBy(['commentUser' => $user]);
@@ -33,6 +33,7 @@ final class UserController extends AbstractController
         foreach ($comments as $comment) {
             $tmdbId = $comment->getMovie()->getTmdbId();
             $movies[$tmdbId] = $tmdb->getMovieDetails($tmdbId);
+            $movies[$tmdbId]['nbResponses'] = count($responseRepository->findBy(['comment' => $comment]));
         }
         return $this->render('user/user_detail.html.twig', [
             'user_detail' => $user,

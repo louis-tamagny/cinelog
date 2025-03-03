@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réponses{% endblock %}
+
+{% block body %}
+<div class="flex flex-col gap-4 items-center justify-center p-6 ">
+
+    <div class="flex flex-col items-center w-full bg-white border border-gray-200 rounded-lg shadow-sm md:flex-row  dark:border-gray-700 dark:bg-gray-800">
+        <!-- Image du film -->
+        <img class="object-cover rounded-tl-lg rounded-bl-lg" src="https://image.tmdb.org/t/p/w154{{ movie.poster_path }}" alt="{{ movie.title }}">
+
+        
+        <!-- Détails du commentaire -->
+        <div class="flex flex-col justify-between p-4 ">
+            <p class="text-xs text-gray-400 font-thin">{{comment.getCommentUser().getUsername()}} à donné son avis sur le film :</p>
+            <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ movie.title }}</h2>
+            <p class="text-gray-600 text-sm mt-1 items-center flex">
+                    {% for i in 1..5 %}
+                        {% if i <= comment.note %}
+                            <!-- Étoile jaune pleine -->
+                            <svg class="w-5 h-5 text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.95a1 1 0 00.95.69h4.163c.969 0 1.371 1.24.588 1.81l-3.37 2.447a1 1 0 00-.364 1.118l1.287 3.95c.3.921-.755 1.688-1.54 1.118l-3.37-2.447a1 1 0 00-1.176 0l-3.37 2.447c-.784.57-1.838-.197-1.54-1.118l1.287-3.95a1 1 0 00-.364-1.118L2.172 9.377c-.784-.57-.38-1.81.588-1.81h4.163a1 1 0 00.95-.69l1.286-3.95z"/>
+                            </svg>
+                        {% else %}
+                            <!-- Étoile grise vide -->
+                            <svg class="w-5 h-5 text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.95a1 1 0 00.95.69h4.163c.969 0 1.371 1.24.588 1.81l-3.37 2.447a1 1 0 00-.364 1.118l1.287 3.95c.3.921-.755 1.688-1.54 1.118l-3.37-2.447a1 1 0 00-1.176 0l-3.37 2.447c-.784.57-1.838-.197-1.54-1.118l1.287-3.95a1 1 0 00-.364-1.118L2.172 9.377c-.784-.57-.38-1.81.588-1.81h4.163a1 1 0 00.95-.69l1.286-3.95z"/>
+                            </svg>
+                        {% endif %}
+                    {% endfor %}
+            </p>
+            
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                "{{ comment.message|length > 250 ? comment.message|slice(0, 250) ~ '...' : comment.message }}"
+            </p>
+        </div>
+    </div>
+
+    <div class="w-full">
+        {% if app.user and app.user != comment.getCommentUser() %}
+        <h2 class="font-bold text-white text-lg mb-2">Ajouter une réponse</h2>
+        <div class="w-full flex flex-col">
+            <form action="{{ path('add_response', {'id': comment.id}) }}" method="post">
+                <textarea required name="response_message" rows="4" class="w-full block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-amber-500 focus:border-amber-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500" placeholder="Votre réponse..."></textarea>
+                <button type="submit" class="mt-2 px-4 py-2 bg-amber-500 text-white rounded">Répondre</button>
+            </form>
+        </div>
+        {% endif %}
+        
+        <h2 class="font-bold text-white text-lg mt-4 mb-2">Dernières réponses</h2>
+        
+        <div class="flex flex-col gap-2">
+            {% for response in responses %}
+                <div class="w-full p-4 flex flex-col border border-gray-500 rounded">
+                    <div class="flex flex-row items-center gap-2">
+                        <h3 class="text-md font-semibold text-white">{{ response.getUserResponse().getUsername() }}</h3>
+                        <p class="text-gray-100 text-xs font-thin">le {{ response.date|date('d F Y') }}</p>
+                    </div>
+                    <p class="text-xs text-gray-300 mt-2">{{ response.message }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{%endblock%}
