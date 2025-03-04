@@ -23,7 +23,8 @@ class TmdbService
         $response = $this->client->request('GET', "{$this->baseUrl}/search/movie", [
             'query' => [
                 'api_key' => $this->apiKey,
-                'query' => $query
+                'query' => $query,
+                'language' => 'fr-FR'
             ]
         ]);
 
@@ -49,7 +50,7 @@ class TmdbService
         $response = $this->client->request('GET', "{$this->baseUrl}/movie/{$movieId}/videos", [
             'query' => [
                 'api_key' => $this->apiKey,
-                'language' => 'en-US',
+                'language' => 'fr-FR',
             ]
         ]);
     
