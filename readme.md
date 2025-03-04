@@ -38,6 +38,22 @@ php bin/console doctrine:database:create
 php bin/console doctrine:migrations:migrate
 ```
 
+## Clés JWT
+
+Pour générer les clés JWT, il faut éxécuter ces commandes :
+
+```bash
+openssl genpkey -algorithm RSA -out config/jwt/private.pem
+openssl rsa -pubout -in config/jwt/private.pem -out config/jwt/public.pem
+```
+
+**OU**
+
+```bash
+php bin/console lexik:jwt:generate-keypair
+```
+
+
 ## Utilisation
 
 Pour lancer le projet, il faut exécuter ces deux commandes dans deux terminaux différents :

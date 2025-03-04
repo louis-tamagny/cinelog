@@ -1,0 +1,56 @@
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg w-full mt-4">
+  <h2 class="text-2xl text-center w-full font-bold mb-4">Commentaires</h2>
+  <table
+    class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+  >
+    <thead
+      class="text-xs text-gray-800 uppercase bg-gray-400"
+    >
+      <tr>
+        <th scope="col" class="px-6 py-3">Utilisateur</th>
+        <th scope="col" class="px-6 py-3">Commentaire</th>
+        <th scope="col" class="px-6 py-3">Notation</th>
+        <th scope="col" class="px-6 py-3">Film</th>
+        <th scope="col" class="px-6 py-3">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for comment in comments %}
+      <tr
+        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
+      >
+        <th
+          scope="row"
+          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+        >
+          {{ comment.comment.getCommentUser().getUsername() }}
+        </th>
+        <td class="px-6 py-4 w-1/3">
+          <div class="max-h-24 overflow-y-scroll">
+            {{ comment.comment.getMessage() }}
+
+          </div>
+        </td>
+        <td class="px-6 py-4">
+          {{ comment.comment.getNote() }}
+        </td>
+        <td class="px-6 py-4">
+          {{ comment.movie.title }}
+        </td>
+        <td class="px-6 py-4">
+          <form
+            action="{{
+              path('delete_comment', { id: comment.comment.getId() })
+            }}"
+            method="post"
+            onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?');"
+          >
+            <input type="hidden" name="_method" value="DELETE" />
+            <button type="submit" class="bg-red-600 hover:bg-red-800 text-white font-semibold text-xs py-1 px-2 rounded">Supprimer</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

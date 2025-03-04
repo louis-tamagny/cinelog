@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cinélog - Profil{% endblock %}
+
+{% block body %}
+  <div class="container mx-auto">
+    {% include 'user/_edit_form.html.twig' %}
+    
+    
+    {% if favouriteMovies|length > 0 %}
+    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Mes films préférés</h1>
+    {% include 'movies/_card_list.html.twig' with {'movies': favouriteMovies} %}
+    {% endif %}
+    
+    {% if watchLaterMovies|length > 0 %}
+    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">A voir</h1>
+    {% include 'movies/_card_list.html.twig' with {'movies': watchLaterMovies} %}
+    {% endif %}
+    
+  </div>
+{% endblock %}

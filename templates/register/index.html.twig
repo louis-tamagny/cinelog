@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cinélog - Inscription{% endblock %}
+
+{% block body %}
+
+{{ form_start(form, {'attr': {'class': 'max-w-sm mx-auto border p-6 rounded flex flex-col gap-4 bg-gray-800 border-gray-700 shadow mt-10', 'data-turbo': 'false'}}) }}
+    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Inscription</h1>
+    <div class="flex flex-col gap">
+        <label for="{{ form.username.vars.id }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom d'utilisateur</label>
+        {{ form_widget(form.username, {'attr': {'class': 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-500 focus:border-yellow-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-yellow-500 dark:focus:border-yellow-500'}}) }}
+    </div>
+
+    <div class="flex flex-col gap">
+        <label for="{{ form.email.vars.id }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Adresse email</label>
+        {{ form_widget(form.email, {'attr': {'class': 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-500 focus:border-yellow-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-yellow-500 dark:focus:border-yellow-500'}, 'type': 'email'}) }}
+    </div>
+
+    <div class="flex flex-col gap">
+        <label for="{{ form.birthDate.vars.id }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date de naissance</label>
+        {{ form_widget(form.birthDate, {'attr': {'class': 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-500 focus:border-yellow-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-yellow-500 dark:focus:border-yellow-500'}}) }}
+    </div>
+
+    <div class="flex flex-col gap">
+        <label for="{{ form.password.vars.id }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mot de passe</label>
+        {{ form_widget(form.password, {'attr': {'class': 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-500 focus:border-yellow-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-yellow-500 dark:focus:border-yellow-500'}, 'type': 'password'}) }}
+    </div>
+
+    <span class="text-base text-slate-800 dark:text-slate-100">Déjà inscrit ? <a class="text-white hover:underline font-semibold text-base cursor-pointer" href="{{path('login')}}">Se connecter</a></span>
+    <button type="submit" class="w-full text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">Connexion</button>
+
+    {% if error is not null %}
+        <div class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
+            <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="sr-only">Info</span>
+            <div>
+                <span class="font-medium">{{ error }}</span>
+            </div>
+        </div>
+    {% endif %}
+
+    {{ form_end(form) }}
+{% endblock %}

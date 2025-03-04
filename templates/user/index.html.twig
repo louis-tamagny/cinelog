@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cinélog - Utilisateurs{% endblock %}
+
+{% block body %}
+
+   <h1 class="mb-8 text-2xl font-bold text-white">Liste des Utilisateurs</h1>
+
+   <div class="flex items-center flex-wrap gap-4 mx-2 my-2">
+        {% for user in users %}
+           {% if 'ROLE_USER' in user.roles %}
+                <div class="w-48 flex flex-col items-center justify-center p-4 rounded">
+                    <div class="text-center text-gray-500 dark:text-gray-400">
+                        <img class="mx-auto mb-4 w-24 h-24 rounded-full shadow-md" src="https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg" alt="Bonnie Avatar">
+                        <h3 class="mb-1 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                            {{ user.username }}
+                        </h3>
+                         <h4>{{ user.comment|length }} avis</h4>
+                         <a class="hover:underline text-amber-500 text-base" href="{{path('user_detail',{"username": user.username})}}">Voir les avis</a>
+                     </div>
+                </div>
+
+            {% endif %}
+        {% endfor %}
+
+    </div>
+{% endblock %}

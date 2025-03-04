@@ -16,6 +16,30 @@ class MovieRepository extends ServiceEntityRepository
         parent::__construct($registry, Movie::class);
     }
 
+    public function findMoviesWithMostComments(int $limit = 7): array
+    {
+        return $this->createQueryBuilder('m')
+            ->select('m.tmdbId, COUNT(c.id) AS comment_count')
+            ->leftJoin('m.comment', 'c')
+            ->groupBy('m.tmdbId')
+            ->orderBy('comment_count', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findTopRatedMovies(int $limit = 7): array
+    {
+        return $this->createQueryBuilder('m')
+            ->select('m.tmdbId, AVG(c.note) AS avg_rating')
+            ->leftJoin('m.comment', 'c')
+            ->groupBy('m.tmdbId')
+            ->orderBy('avg_rating', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Movie[] Returns an array of Movie objects
     //     */
