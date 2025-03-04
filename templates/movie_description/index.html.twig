@@ -35,13 +35,19 @@
             <div class="flex flex-row  my-2 mx-2 justify-between">
                 {% for actor in actorMovies|slice(0, 8) %}
                 <div class="flex flex-col items-center max-w-[110px] ">
+                    {%if actor.profile_path %}
                     <img
                         src="https://image.tmdb.org/t/p/w92{{ actor.profile_path }}"
-                        class="rounded-md">
+                        class="rounded-md object-cover">
+                    {% else %}
+                    <img
+                        src="https://kuduconsulting.co.zm/wp-content/uploads/2017/11/default-portrait-image-generic-profile.jpg"
+                        class="rounded-md m-w-[92px] h-[138px]">
+                        {% endif %}
                     <p class="text-white text-sm text-center">{{ actor.name
                         }}</p>
                     <p
-                        class="text-right text-xs text-gray-400">{{actor.character}}</p>
+                        class="text-center text-xs text-gray-400">{{actor.character}}</p>
                 </div>
                 {%endfor%}
             </div>
