@@ -34,6 +34,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
          - { path: ^/login, roles: PUBLIC_ACCESS }
+         - { path: ^/register, roles: PUBLIC_ACCESS }
          - { path: ^/movie/details/\d+, roles: PUBLIC_ACCESS }
          - { path: ^/dashboard, roles: ROLE_ADMIN }
          - { path: ^/user/\d+/toggle-admin, roles: ROLE_ADMIN }
@@ -42,7 +43,7 @@ security:
          - { path: ^/movie/*, roles: ROLE_USER }
          - { path: ^/user/*, roles: ROLE_USER }
          - { path: ^/comment/*, roles: ROLE_USER }
-         - { path: ^/*, roles: ROLE_USER }
+         - { path: ^/.+, roles: ROLE_USER }
 
 when@test:
     security:
