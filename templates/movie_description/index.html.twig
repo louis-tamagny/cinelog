@@ -3,13 +3,13 @@
 {% block title %}Cinélog - {{ movie.title }}{% endblock %}
 
 {% block body %}
-  <div class="flex flex-row items-center justify-center p-6">
+  <div class="flex flex-row items-center p-6">
       <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}" alt="{{ movie.title }}">
-      <div class="flex justify-between flex-col">
+      <div class="flex justify-between flex-col w-full">
         <div class="flex flex-col h-[450px] p-4 align-top">
             <h1 class="text-white  text-4xl font-bold">{{ movie.title }} ({{ movie.release_date|date("Y") }})</h1>
             <div class="flex flex-row gap-2 my-2 mx-2">
-                <p class="text-white text-sm">{{ movie.release_date|date("d/m/Y") }} ({{movie.origin_country[0]}})</p>
+                <p class="text-white text-sm">{{ movie.release_date|date("d/m/Y") }} (FR)</p>
                 <span class="text-white text-sm">.</span>
                 <ul class="text-white flex flex-row gap-2">
                     {% for genre in movie.genres %}
