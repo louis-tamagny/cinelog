@@ -19,14 +19,6 @@ use App\Service\TmdbService;
 
 final class CommentController extends AbstractController
 {
-    #[Route('/comment', name: 'app_comment')]
-    public function index(): Response
-    {
-        return $this->render('comment/index.html.twig', [
-            'controller_name' => 'CommentController',
-        ]);
-    }
-
     #[Route('/comment/{id}', name:'delete_comment', methods: ['DELETE'])]
     public function delete(EntityManagerInterface $entityManager, Comment $comment): Response
     {

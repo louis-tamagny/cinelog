@@ -84,7 +84,7 @@ final class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/user/toggle-admin/{id}', name: 'toggle_admin')]
+    #[Route('/user/{id}/toggle-admin', name: 'toggle_admin')]
     public function toggleAdmin(User $user, EntityManagerInterface $entityManager): RedirectResponse
     {
         $currentUser = $this->getUser();
