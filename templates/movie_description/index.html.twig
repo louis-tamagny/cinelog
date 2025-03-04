@@ -77,9 +77,9 @@
 </div>
 {% endif %}
 
-{% if app.user %}
-{{ include('comment/form.html.twig') }}
-{% endif %}
+  {% if app.user and not existingComment %}
+    {{ include('comment/form.html.twig') }}
+  {% endif %}
 
 {% if comments %}
 <h2
