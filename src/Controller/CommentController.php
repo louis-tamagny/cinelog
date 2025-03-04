@@ -43,7 +43,7 @@ final class CommentController extends AbstractController
     }
 
     #[Route('/movie/details/{tmdbId}', name:'movie_new_comment', methods: ['POST'])]
-    public function new(Request $request, int $tmdbId, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, int $tmdbId, EntityManagerInterface $entityManager, CommentRepository $commentRepository): Response
     {
         // Créer une nouvelle instance de l'entité User
         $comment = new Comment();
@@ -58,6 +58,13 @@ final class CommentController extends AbstractController
           $movie = new Movie();
           $movie->setTmdbId($tmdbId);
           $entityManager->persist($movie);
+        }
+
+        // Vérifier si l'utilisateur a déjà écrit un commentaire pour ce film
+        $existingComment = $commentRepository->findOneBy(['commentUser' => $user, 'movie' => $movie]);
+        if ($existingComment) {
+            $this->addFlash('error', 'Vous avez déjà écrit un commentaire pour ce film.');
+            return $this->redirectToRoute('movie_details', ['id' => $movie->getTmdbId()]);
         }
 
         $date = new \DateTime();
