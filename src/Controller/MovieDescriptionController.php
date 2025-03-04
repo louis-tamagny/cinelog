@@ -25,6 +25,7 @@ final class MovieDescriptionController extends AbstractController
     {
         $movie = $tmdbService->getMovieDetails($id);
         $trailerKey = $tmdbService->getMovieTrailer($id);
+        $actorMovies = $tmdbService->getActorMovies($id);
         $createcomment = new Comment();
         $moviecomment = $movieRepository->findOneBy(['tmdbId' => $id]);
         $comments = $commentRepository->findBy(['movie' => $moviecomment]);
@@ -39,6 +40,7 @@ final class MovieDescriptionController extends AbstractController
             'movie' => $movie,
             'form' => $form->createView(),
             'trailerKey' => $trailerKey,
+            'actorMovies' => $actorMovies,
             'comments' => $comments,
             'userFavorite' => $userFavorite,
             'userWatchLater' => $userWatchLater,
