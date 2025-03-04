@@ -31,6 +31,9 @@ final class CommentController extends AbstractController
     public function delete(EntityManagerInterface $entityManager, Comment $comment): Response
     {
       if ($comment) {
+        foreach ($comment->getResponses() as $response) {
+          $entityManager->remove($response);
+        }
         $entityManager->remove($comment);
         $entityManager->flush();
         $this->addFlash( 'success','Le commentaire a été effacé');
