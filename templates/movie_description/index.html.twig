@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="flex flex-row items-start p-6">
-    
+
         <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}"
             alt="{{ movie.title }}" class="flex items-start">
     <div class="flex justify-between flex-col w-full">
@@ -127,6 +127,7 @@
                 "{{ comment.message|length > 250 ? comment.message|slice(0, 250)
                 ~ '...' : comment.message }}"
             </p>
+            <a href="{{path('commentResponse', {'id': comment.id})}}" class="text-amber-500 hover:underline text-xs">Voir les commentaires sur l'avis.</a>
         </div>
     </div>
     {% endfor %}
