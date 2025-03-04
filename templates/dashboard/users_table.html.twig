@@ -55,7 +55,7 @@
         <td class="px-6 py-4 text-right">
           {% if app.user.getId() != user.getId() %}
               <form action="{{ path('toggle_admin', {'id': user.getId()}) }}" method="POST">
-                  <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-semibold text-xs py-1 px-2 rounded">
+                  <button type="submit" class="bg-amber-500 hover:bg-amber-700 text-white font-semibold text-xs py-1 px-2 rounded">
                       {% if 'ROLE_ADMIN' in user.getRoles() %}
                           Retirer Admin
                       {% else %}
