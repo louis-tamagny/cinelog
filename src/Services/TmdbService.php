@@ -42,7 +42,14 @@ class TmdbService
         return $response->toArray();
     }
 
-
+    public function getActorMovies(int $movieId): array
+    {
+        $response = $this->client->request('GET', "{$this->baseUrl}/movie/{$movieId}/credits", [
+            'query' => ['api_key' => $this->apiKey, 'language' => 'fr-FR']
+        ]);
+        $data = $response->toArray();
+        return $data['cast']??[];
+    }
 
     public function getMovieTrailer(int $movieId): ?string
     {
