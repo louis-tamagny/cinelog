@@ -30,11 +30,14 @@ final class MovieDescriptionController extends AbstractController
         $comments = $commentRepository->findBy(['movie' => $moviecomment]);
 
         $form = $this->createForm(CommentType::class, $createcomment);
-
+        
         $user = $this->getUser();
+        
+        $existingComment = $commentRepository->findOneBy(['commentUser' => $user, 'movie' => $movie]);
+        
         $userFavorite = $user ? $user->getFavourite()->contains($moviecomment) : False;
         $userWatchLater = $user ? $user->getWatchLater()->contains($moviecomment) : False;
-
+        
         return $this->render('movie_description/index.html.twig', [
             'movie' => $movie,
             'form' => $form->createView(),
@@ -42,6 +45,7 @@ final class MovieDescriptionController extends AbstractController
             'comments' => $comments,
             'userFavorite' => $userFavorite,
             'userWatchLater' => $userWatchLater,
+            'existingComment' => $existingComment,
         ]);
     }
 
